@@ -1,5 +1,6 @@
 from flask import Flask
 from jikanpy import Jikan
+from flask import jsonify
 app = Flask(__name__)
 jikan = Jikan()
 
@@ -7,11 +8,13 @@ jikan = Jikan()
 def home():
     return "<h1>Anime recomendations</h1>"
 
-@app.route('/my-anime-user/<name>')
-def my_anime_username(name):
+@app.route('/my-anime-user', methods=["GET"])
+def my_anime_username():
     
     # get profile info, same as above
-    my_anime_user = jikan.user(username=name, request='profile')
+    my_anime_user = jikan.user(username="king_key", request='profile')
+    response = jsonify(my_anime_user)
+    return response
 
 if __name__ == "__main__":
     app.run()
